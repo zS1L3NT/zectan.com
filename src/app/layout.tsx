@@ -1,17 +1,14 @@
 import type { Metadata } from "next"
-import dynamic from "next/dynamic"
 import type { PropsWithChildren } from "react"
 
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next"
 import { SpeedInsights as VercelSpeedInsights } from "@vercel/speed-insights/next"
 
-import { Provider as PostHogProvider } from "./posthog"
+import { SuspendedPageView as PostHogPageView, Provider as PostHogProvider } from "./posthog"
 
 import { SITE_DESCRIPTION, SITE_PROFILE_IMAGE, SITE_TITLE, SITE_URL } from "@/constants"
 // @ts-ignore
 import "@/style.scss"
-
-const PostHogPageView = dynamic(() => import("./posthog"), { ssr: false })
 
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (

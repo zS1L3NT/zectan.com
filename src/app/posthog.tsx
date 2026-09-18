@@ -3,7 +3,7 @@
 import { usePathname, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
 import { PostHogProvider, usePostHog } from "posthog-js/react"
-import { type PropsWithChildren, useEffect } from "react"
+import { type PropsWithChildren, Suspense, useEffect } from "react"
 
 if (typeof window !== "undefined") {
 	posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
@@ -34,4 +34,13 @@ export default function PageView(): null {
 	}, [pathname, searchParams, posthog])
 
 	return null
+}
+
+// Suspense boundary required around useSearchParams for static prerendering
+export function SuspendedPageView() {
+	return (
+		<Suspense fallback={null}>
+			<PageView />
+		</Suspense>
+	)
 }
