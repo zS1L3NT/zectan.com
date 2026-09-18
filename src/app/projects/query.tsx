@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 
 import TagImage from "@/components/tag-image"
-import { HIDDEN_TAGS, TAG_CATEGORIES } from "@/constants"
+import { HIDDEN_TAGS, TAG_CATEGORIES, TAG_ICON_URL } from "@/constants"
 import useQuery from "@/hooks/use-query"
 import cn from "@/utils/cn"
 
@@ -45,7 +45,7 @@ const Checkbox = ({
 }
 
 export default function Query({ projectsTags }: { projectsTags: string[] }) {
-	const { tags, order, orderBy } = useQuery(projectsTags)
+	const { tags } = useQuery(projectsTags)
 
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedTags, setSelectedTags] = useState<string[]>(tags)
@@ -54,22 +54,15 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 		setSelectedTags(tags)
 	}, [tags])
 
-	const getLink = ({
-		tags,
-		order,
-		orderBy,
-	}: {
-		tags: string[]
-		order: string
-		orderBy: string
-	}) => {
+	const getLink = ({ tags }: { tags: string[] }) => {
 		const search = new URLSearchParams()
 
-		search.set("tags", tags.join(","))
-		search.set("orderBy", orderBy)
-		search.set("order", order)
+		if (tags.length > 0) {
+			search.set("tags", tags.join(","))
+		}
 
-		return `/projects?${(`${search}`).replaceAll("%2C", ",")}`
+		const query = `${search}`.replaceAll("%2C", ",")
+		return query ? `/projects?${query}` : "/projects"
 	}
 
 	const OTHER_TAGS = projectsTags.filter(
@@ -86,76 +79,6 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 				>
 					<Image src="/assets/images/filter.svg" alt="Filter" width={20} height={20} />
 				</button>
-
-				<div className="flex">
-					<Link
-						href={getLink({ tags, order, orderBy: "date" })}
-						className={cn(
-							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200",
-							orderBy === "date" ? "bg-primary-400" : "bg-slate-200",
-						)}
-					>
-						<Image
-							src="/assets/images/sort-date.svg"
-							alt="Filter"
-							width={20}
-							height={20}
-							className={cn(orderBy === "date" ? "invert" : "")}
-						/>
-					</Link>
-
-					<Link
-						href={getLink({ tags, order, orderBy: "title" })}
-						className={cn(
-							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200 bg-slate-200",
-							orderBy === "title" ? "bg-primary-400" : "bg-slate-200",
-						)}
-					>
-						<Image
-							src="/assets/images/sort-title.svg"
-							alt="Filter"
-							width={20}
-							height={20}
-							className={cn(orderBy === "title" ? "invert" : "")}
-						/>
-					</Link>
-				</div>
-
-				<div className="flex">
-					<Link
-						href={getLink({ tags, order: "asc", orderBy })}
-						className={cn(
-							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200",
-							order === "asc" ? "bg-primary-400" : "bg-slate-200",
-						)}
-					>
-						<p
-							className={cn(
-								"xs:text-sm sm:text-base lg:text-md font-montserrat-regular",
-								order === "asc" ? "text-white" : "",
-							)}
-						>
-							Ascending
-						</p>
-					</Link>
-
-					<Link
-						href={getLink({ tags, order: "desc", orderBy })}
-						className={cn(
-							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200 bg-slate-200",
-							order === "desc" ? "bg-primary-400" : "bg-slate-200",
-						)}
-					>
-						<p
-							className={cn(
-								"xs:text-sm sm:text-base lg:text-md font-montserrat-regular",
-								order === "desc" ? "text-white" : "",
-							)}
-						>
-							Descending
-						</p>
-					</Link>
-				</div>
 			</div>
 
 			<div className="flex flex-wrap xs:gap-2 sm:gap-3 lg:gap-4">
@@ -167,13 +90,13 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 						<Image
 							title={t[0]?.toUpperCase() + t.slice(1)}
 							className="inline-block"
-							src={`https://res.cloudinary.com/zs1l3nt/image/upload/icons/${t}.svg`}
+							src={TAG_ICON_URL(t)}
 							alt={`${t} icon`}
 							width={16}
 							height={16}
 						/>
 						{t[0]?.toUpperCase() + t.slice(1)}
-						<Link href={getLink({ tags: tags.filter(t_ => t !== t_), order, orderBy })}>
+						<Link href={getLink({ tags: tags.filter(t_ => t !== t_) })}>
 							<Image
 								className="ml-1 cursor-pointer hover:scale-105"
 								src="/assets/images/close.svg"
@@ -249,7 +172,7 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 										Cancel
 									</button>
 									<Link
-										href={getLink({ tags: selectedTags, order, orderBy })}
+										href={getLink({ tags: selectedTags })}
 										onClick={() => setIsOpen(false)}
 										className="block px-3 py-2 text-white xs:text-sm sm:text-base lg:text-md font-montserrat-regular hover:scale-105 hover:shadow-primary-400 bg-primary-400"
 									>

@@ -7,8 +7,6 @@ export default (projectsTags: string[]) => {
 	return useMemo(
 		() => ({
 			tags: (search.get("tags")?.split(",") ?? []).filter(t => projectsTags.includes(t)),
-			order: search.get("order") ?? "desc",
-			orderBy: search.get("orderBy") ?? "date",
 		}),
 		[search, projectsTags],
 	)

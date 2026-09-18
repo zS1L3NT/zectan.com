@@ -44,11 +44,25 @@ export const ABOUT_PARAGRAPHS = [
 ]
 
 // ── Projects ──
-/**
- * Tier 1 Project: Project that is one of my best that I will proudly display
- * Tier 2 Project: Project that took me a while to build, but isn't portfolio worthy
- * Tier 3 Project: Project that is really simply / completely useless, worth showing as an archive but not worth showing off
- */
+export type ProjectTier = 1 | 2 | 3
+
+export const TIER_META: { tier: ProjectTier; heading: string; blurb: string }[] = [
+	{
+		tier: 1,
+		heading: "Best work",
+		blurb: "My best projects — the ones I'd proudly show off.",
+	},
+	{
+		tier: 2,
+		heading: "Solid builds",
+		blurb: "Took real time to build, but not portfolio highlights.",
+	},
+	{
+		tier: 3,
+		heading: "Archive",
+		blurb: "Tiny, simple, or just for fun — completeness over quality. Expectations drop from here.",
+	},
+]
 
 // Homepage "Featured Projects" section (order = display order)
 export const FEATURED_PROJECT_IDS = [
@@ -71,16 +85,16 @@ export const OTHER_PROJECT_IDS = [
 
 // Extra repo IDs that appear ONLY on the /projects page
 // (order within each tier = display order)
-export const EXTRA_PROJECT_IDS: string[] = [
-	// Tier 1
+export const EXTRA_TIER_1_IDS: string[] = [
 	"deskpower",
 	"web-formby",
 	"thepawn",
 	"soundroid-v1",
 	"web-next-statify",
 	"mldp",
+]
 
-	// Tier 2
+export const EXTRA_TIER_2_IDS: string[] = [
 	"zectan.com",
 	"ts-burp-accelerator",
 	"web-youtubedl",
@@ -101,8 +115,9 @@ export const EXTRA_PROJECT_IDS: string[] = [
 	"ts-bun-gitcache",
 	"web-chess",
 	"chess-online",
+]
 
-	// Tier 3
+export const EXTRA_TIER_3_IDS: string[] = [
 	"ts-adventofcode-2023",
 	"web-react-rubikscube",
 	"ts-discord-shutup",
@@ -120,6 +135,21 @@ export const EXTRA_PROJECT_IDS: string[] = [
 	"web-geekout-intro",
 	"web-song-mago",
 ]
+
+export const EXTRA_PROJECT_IDS: string[] = [
+	...EXTRA_TIER_1_IDS,
+	...EXTRA_TIER_2_IDS,
+	...EXTRA_TIER_3_IDS,
+]
+
+const TIER_1_SET = new Set([...FEATURED_PROJECT_IDS, ...OTHER_PROJECT_IDS, ...EXTRA_TIER_1_IDS])
+const TIER_2_SET = new Set([...EXTRA_TIER_2_IDS])
+
+export const getProjectTier = (id: string): ProjectTier => {
+	if (TIER_1_SET.has(id)) return 1
+	if (TIER_2_SET.has(id)) return 2
+	return 3
+}
 
 // Full list fetched from GitHub (live metadata) for the /projects page.
 // To add/remove a project site-wide, edit the arrays above.
