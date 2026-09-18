@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 
+import { TYPEWRITER_PREFIX, TYPEWRITER_WORDS } from "@/constants"
 import cn from "@/utils/cn"
 
 const time = (ms: number) => new Promise(res => setTimeout(res, ms))
@@ -11,18 +12,13 @@ export default function Typewriter() {
 	const [message, setMessage] = useState("")
 
 	useEffect(() => {
-		const words = [
-			"WorldSkills Bronze Medallist",
-			"Diploma Course Valedictorian",
-			"Full Stack Web Developer",
-			"DevOps & Cloud Engineer"
-		]
+		const words = TYPEWRITER_WORDS
 
 		let cancelled = false
 		time(500).then(async () => {
 			if (cancelled) return
 
-			for (const letter of "and I'm a ") {
+			for (const letter of TYPEWRITER_PREFIX) {
 				setMessage(message => message + letter)
 				await time(40)
 				if (cancelled) return

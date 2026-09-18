@@ -2,6 +2,21 @@ import Image from "next/image"
 import Link from "next/link"
 
 import TagImage from "@/components/tag-image"
+import {
+	ABOUT_PARAGRAPHS,
+	CONTACT_EMAIL,
+	CONTACT_TEXT,
+	FEATURED_PROJECT_IDS,
+	GITHUB_USERNAME,
+	HERO_GREETING,
+	HERO_NAME,
+	LAST_UPDATED_BRANCH,
+	LAST_UPDATED_REPO,
+	OTHER_PROJECT_IDS,
+	REPO_BANNER_URL,
+	SITE_PROFILE_IMAGE,
+	SOCIAL_LINKS,
+} from "@/constants"
 import cn from "@/utils/cn"
 import getProjects from "@/utils/get-projects"
 
@@ -14,8 +29,8 @@ const svgClassName =
 export default async function Page() {
 	const projects = await getProjects()
 	const updated = await fetch(
-		"https://api.github.com/repos/zS1L3NT/web-next-portfolio/commits/main",
-		{ next: { tags: ["cached"] } },
+		`https://api.github.com/repos/${GITHUB_USERNAME}/${LAST_UPDATED_REPO}/commits/${LAST_UPDATED_BRANCH}`,
+		{ cache: "no-store" },
 	)
 		.then(res => res.json())
 		.then(res => res.commit.author.date)
@@ -30,7 +45,7 @@ export default async function Page() {
 				<div className="absolute flex items-center justify-center pointer-events-none size-full">
 					<div className="text-center xs:mx-2 sm:mx-1">
 						<h1 className="text-white select-none xs:text-3xl sm:text-4xl md:text-6xl font-montserrat-regular">
-							Hello, I&apos;m <span className="text-primary-400">Zechariah Tan</span>
+							{HERO_GREETING} <span className="text-primary-400">{HERO_NAME}</span>
 						</h1>
 						<Typewriter />
 
@@ -38,7 +53,7 @@ export default async function Page() {
 							<div className="flex xs:mt-8 sm:mt-12 md:mt-16 w-fit">
 								<Link
 									className="z-0 block"
-									href="https://www.github.com/zS1L3NT"
+									href={SOCIAL_LINKS.github}
 									target="_blank"
 									rel="noreferrer"
 								>
@@ -55,7 +70,7 @@ export default async function Page() {
 								</Link>
 								<Link
 									className="z-0 block"
-									href="https://www.linkedin.com/in/zectan"
+									href={SOCIAL_LINKS.linkedin}
 									target="_blank"
 									rel="noreferrer"
 								>
@@ -72,7 +87,7 @@ export default async function Page() {
 								</Link>
 								<Link
 									className="z-0 block"
-									href="https://www.stackoverflow.com/users/7544646/zs1l3nt"
+									href={SOCIAL_LINKS.stackoverflow}
 									target="_blank"
 									rel="noreferrer"
 								>
@@ -89,7 +104,7 @@ export default async function Page() {
 								</Link>
 								<Link
 									className="z-0 block"
-									href="https://leetcode.com/zs1l3nt"
+									href={SOCIAL_LINKS.leetcode}
 									target="_blank"
 									rel="noreferrer"
 								>
@@ -123,33 +138,15 @@ export default async function Page() {
 					<div className="container flex flex-col mx-auto xs:gap-8 sm:gap-12 lg:gap-16 xs:my-6 sm:my-9 md:my-14 lg:flex-row">
 						<Image
 							className="m-auto rounded-full xs:w-40 xs:h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64"
-							src="/assets/images/profile.jpg"
+							src={SITE_PROFILE_IMAGE}
 							alt="Profile Picture"
 							width={512}
 							height={512}
 						/>
 						<div className="flex flex-col gap-4 flex-2 xs:px-6 sm:px-10 lg:px-0 font-montserrat-regular xs:text-sm md:text-lg">
-							<p>
-								Hello! My name is Zechariah, and I'm a Web Developer from Singapore.
-								I specialize in Full-Stack Development and DevOps, and I love
-								solving programming challenges. I also enjoy working on side
-								projects, especially those that help me learn new skills or address
-								real-world problems.
-							</p>
-							<p>
-								I won a Bronze Medal in the WorldSkills Championship 2024 in Lyon,
-								France, in the Web Development skill trade. Preparing for this
-								competition pushed me to master a broad range of tools in the Web
-								Development space, which was both intellectually demanding and
-								rewarding.
-							</p>
-							<p>
-								Outside schoolwork, I am usually either watching Korean Dramas or
-								working on a side project. Most of the side projects I build use
-								either TypeScript or Rust as they are the languages I am most
-								comfortable using. I occasionally do App Development using Flutter
-								and hope to find time to try out React Native one day.
-							</p>
+							{ABOUT_PARAGRAPHS.map(paragraph => (
+								<p key={paragraph.slice(0, 32)}>{paragraph}</p>
+							))}
 						</div>
 					</div>
 				</section>
@@ -160,9 +157,7 @@ export default async function Page() {
 					</h1>
 					<div className="container flex flex-col mx-auto xs:gap-4 sm:gap-8 lg:gap-16 xs:px-6 sm:px-10 lg:px-0 xs:my-6 sm:my-9 md:my-14">
 						{projects
-							.filter(p =>
-								["soundroid-v2", "web-formby", "rs-tauri-chess"].includes(p.title),
-							)
+							.filter(p => FEATURED_PROJECT_IDS.includes(p.title))
 							.map(project => (
 								<div
 									key={project.title}
@@ -170,7 +165,7 @@ export default async function Page() {
 								>
 									<Image
 										className="sm:w-full md:w-full lg:w-fit lg:h-72"
-										src={`https://res.cloudinary.com/zs1l3nt/image/upload/repositories/${project.title}.png`}
+										src={REPO_BANNER_URL(project.title)}
 										alt={`Banner for ${project.title}`}
 										width={1600}
 										height={900}
@@ -179,7 +174,7 @@ export default async function Page() {
 
 									<div className="flex flex-col justify-center flex-1 xs:px-2 xs:py-4 sm:p-4 lg:p-0">
 										<Link
-											href={`https://github.com/zS1L3NT/${project.title}`}
+											href={`https://github.com/${GITHUB_USERNAME}/${project.title}`}
 											target="_blank"
 											className="font-montserrat-bold xs:text-xl sm:text-2xl lg:text-3xl hover:text-secondary-400"
 										>
@@ -206,20 +201,11 @@ export default async function Page() {
 					</h1>
 					<div className="container grid mx-auto xs:gap-8 sm:gap-10 lg:gap-12 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xs:px-6 sm:px-10 lg:px-0 xs:my-6 sm:my-9 md:my-14">
 						{projects
-							.filter(p =>
-								[
-									"ts-discord-soundroid",
-									"web-monetary",
-									"deskpower",
-									"web-next-statify",
-									"ts-npm-ytmusic-api",
-									"ts-discord-reminder",
-								].includes(p.title),
-							)
+							.filter(p => OTHER_PROJECT_IDS.includes(p.title))
 							.map(project => (
 								<Link
 									key={project.title}
-									href={`https://github.com/zS1L3NT/${project.title}`}
+									href={`https://github.com/${GITHUB_USERNAME}/${project.title}`}
 									target="_blank"
 									className="flex flex-col justify-between h-full gap-4 shadow-md hover:scale-105 hover:shadow-slate-300 xs:p-4 sm:p-5 lg:p-6 shadow-slate-100 bg-slate-100 "
 								>
@@ -253,11 +239,10 @@ export default async function Page() {
 							Interested in working with me?
 						</h1>
 						<p className="mt-2 text-center xs:w-10/12 sm:w-8/12 lg:w-1/2 font-montserrat-regular xs:text-base sm:text-md lg:text-lg">
-							If you have any questions for me, feel free to reach out to me via
-							email! I&apos;ll get back to you as soon as I can :D
+							{CONTACT_TEXT}
 						</p>
 						<Link
-							href="mailto:dev@zectan.com"
+							href={`mailto:${CONTACT_EMAIL}`}
 							className="px-4 py-3 mt-8 text-white font-montserrat-regular hover:scale-105 hover:shadow-primary-400 bg-primary-400"
 						>
 							Contact Me

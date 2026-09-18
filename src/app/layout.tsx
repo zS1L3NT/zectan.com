@@ -7,6 +7,8 @@ import { SpeedInsights as VercelSpeedInsights } from "@vercel/speed-insights/nex
 
 import { Provider as PostHogProvider } from "./posthog"
 
+import { SITE_DESCRIPTION, SITE_PROFILE_IMAGE, SITE_TITLE, SITE_URL } from "@/constants"
+// @ts-ignore
 import "@/style.scss"
 
 const PostHogPageView = dynamic(() => import("./posthog"), { ssr: false })
@@ -27,19 +29,19 @@ export default function RootLayout({ children }: PropsWithChildren) {
 }
 
 export const metadata: Metadata = {
-	metadataBase: new URL("https://www.zectan.com/"),
+	metadataBase: new URL(SITE_URL),
 	icons: {
 		icon: "/favicon.ico",
 		apple: "/favicon.ico",
 	},
 	manifest: "/manifest.json",
-	title: "Zechariah Tan",
-	description: "Zechariah's Portfolio Website",
+	title: SITE_TITLE,
+	description: SITE_DESCRIPTION,
 	openGraph: {
 		type: "profile",
-		url: "https://www.zectan.com/",
-		title: "Zechariah Tan",
-		description: "Zechariah's Portfolio Website",
-		images: ["/assets/images/profile.jpg"],
+		url: SITE_URL,
+		title: SITE_TITLE,
+		description: SITE_DESCRIPTION,
+		images: [SITE_PROFILE_IMAGE],
 	},
 }

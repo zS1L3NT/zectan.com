@@ -1,3 +1,142 @@
+// ─────────────────────────────────────────────────────────────
+// ALL static site content lives here. Edit this file to change
+// copy, links, images, particles, tags, or which projects appear.
+// ─────────────────────────────────────────────────────────────
+
+// ── Site metadata (used in app/layout.tsx) ──
+export const SITE_URL = "https://www.zectan.com/"
+export const SITE_TITLE = "Zechariah Tan"
+export const SITE_DESCRIPTION = "Zechariah's Portfolio Website"
+export const SITE_PROFILE_IMAGE = "/assets/images/profile.jpg"
+
+// ── GitHub ──
+export const GITHUB_USERNAME = "zS1L3NT"
+
+// Repo + branch powering the "Last updated on ..." footer
+export const LAST_UPDATED_REPO = "zectan.com"
+export const LAST_UPDATED_BRANCH = "main"
+
+// ── Hero section ──
+export const HERO_GREETING = "Hello, I'm"
+export const HERO_NAME = "Zechariah Tan"
+
+export const TYPEWRITER_PREFIX = "and I'm a "
+export const TYPEWRITER_WORDS = [
+	"WorldSkills Bronze Medallist",
+	"TP Diploma Course Valedictorian",
+	"NUS Computer Science Student",
+	"Full Stack Web Developer",
+]
+
+// ── Social links (hero section) ──
+export const SOCIAL_LINKS = {
+	github: "https://www.github.com/zS1L3NT",
+	linkedin: "https://www.linkedin.com/in/zectan",
+	stackoverflow: "https://www.stackoverflow.com/users/7544646/zs1l3nt",
+	leetcode: "https://leetcode.com/zs1l3nt",
+} as const
+
+// ── About section ──
+export const ABOUT_PARAGRAPHS = [
+	"Hello! My name is Zechariah, and I'm a Web Developer from Singapore. I specialize in Full-Stack Development and DevOps, and I love solving programming challenges. I also enjoy working on side projects, especially those that help me learn new skills or address real-world problems.",
+	"I won a Bronze Medal in the WorldSkills Championship 2024 in Lyon, France, in the Web Development skill trade. Preparing for this competition pushed me to master a broad range of tools in the Web Development space, which was both intellectually demanding and rewarding.",
+	"Outside schoolwork, I am usually either watching Korean Dramas or working on a side project. Most of the side projects I build use either TypeScript or Rust as they are the languages I am most comfortable using.",
+]
+
+// ── Projects ──
+/**
+ * Tier 1 Project: Project that is one of my best that I will proudly display
+ * Tier 2 Project: Project that took me a while to build, but isn't portfolio worthy
+ * Tier 3 Project: Project that is really simply / completely useless, worth showing as an archive but not worth showing off
+ */
+
+// Homepage "Featured Projects" section (order = display order)
+export const FEATURED_PROJECT_IDS = [
+	// Tier 1
+	"finpoint",
+	"soundroid-v2",
+	"therook",
+]
+
+// Homepage "Other Projects" grid (order = display order)
+export const OTHER_PROJECT_IDS = [
+	// Tier 1
+	"ts-npm-ytmusic-api",
+	"nus-canvas-archive",
+	"ts-discord-soundroid",
+	"ts-discord-reminder",
+	"web-monetary",
+	"web-next-markex",
+]
+
+// Extra repo IDs that appear ONLY on the /projects page
+// (order within each tier = display order)
+export const EXTRA_PROJECT_IDS: string[] = [
+	// Tier 1
+	"deskpower",
+	"web-formby",
+	"thepawn",
+	"soundroid-v1",
+	"web-next-statify",
+	"mldp",
+
+	// Tier 2
+	"zectan.com",
+	"ts-burp-accelerator",
+	"web-youtubedl",
+	"ts-npm-nova-bot",
+	"ts-discord-polling",
+	"ts-discord-vcsessions",
+	"py-pyautogui-thetower",
+	"rs-cli-nova",
+	"ts-telegram-walletsync",
+	"ts-spotify-to-youtube",
+	"web-next-diffiehellman",
+	"py-sudoku-solver",
+	"rs-cargo-parson",
+	"android-react-learnkorean",
+	"lotterex",
+	"whosthat",
+	"alprom",
+	"ts-bun-gitcache",
+	"web-chess",
+	"chess-online",
+
+	// Tier 3
+	"ts-adventofcode-2023",
+	"web-react-rubikscube",
+	"ts-discord-shutup",
+	"ts-npm-validate-any",
+	"ts-npm-after-every",
+	"chatic",
+	"rs-bowling-score",
+	"ino-arduino-reactiontest",
+	"rs-impossible-tictactoe",
+	"js-node-mst",
+	"gitcat",
+	"web-vue-graphx",
+	"py-folder-sizes",
+	"py-text-cryptor",
+	"web-geekout-intro",
+	"web-song-mago",
+]
+
+// Full list fetched from GitHub (live metadata) for the /projects page.
+// To add/remove a project site-wide, edit the arrays above.
+export const PROJECT_IDS = [
+	...new Set([...FEATURED_PROJECT_IDS, ...OTHER_PROJECT_IDS, ...EXTRA_PROJECT_IDS]),
+]
+
+// ── Contact section ──
+export const CONTACT_TEXT =
+	"If you have any questions for me, feel free to reach out to me via email! I'll get back to you as soon as I can :D"
+export const CONTACT_EMAIL = "dev@zectan.com"
+
+// ── Images (Cloudinary) ──
+export const CLOUDINARY_BASE = "https://res.cloudinary.com/zs1l3nt/image/upload"
+export const REPO_BANNER_URL = (repo: string) => `${CLOUDINARY_BASE}/repositories/${repo}.png`
+export const TAG_ICON_URL = (tag: string) => `${CLOUDINARY_BASE}/icons/${tag}.svg`
+
 export const PARTICLES = {
 	SCREEN_WIDTH_DIVISOR: 8,
 	COLOR: "204, 214, 246",
