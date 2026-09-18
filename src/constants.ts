@@ -68,18 +68,18 @@ export const TIER_META: { tier: ProjectTier; heading: string; blurb: string }[] 
 // Canonical tier lists. Order within each tier = display order on /projects,
 // so reorder these arrays for a full custom sort.
 export const TIER_1_IDS = [
-	"finpoint",
-	"soundroid-v2",
-	"therook",
 	"ts-npm-ytmusic-api",
+	"finpoint",
+	"therook",
+	"soundroid-v2",
 	"nus-canvas-archive",
 	"ts-discord-soundroid",
 	"ts-discord-reminder",
 	"web-monetary",
 	"web-next-markex",
-	"deskpower",
 	"web-formby",
 	"thepawn",
+	"deskpower",
 	"soundroid-v1",
 	"web-next-statify",
 	"mldp",
@@ -97,6 +97,7 @@ export const TIER_2_IDS = [
 	"ts-telegram-walletsync",
 	"ts-spotify-to-youtube",
 	"web-next-diffiehellman",
+	"web-react-rubikscube",
 	"py-sudoku-solver",
 	"rs-cargo-parson",
 	"android-react-learnkorean",
@@ -110,7 +111,6 @@ export const TIER_2_IDS = [
 
 export const TIER_3_IDS = [
 	"ts-adventofcode-2023",
-	"web-react-rubikscube",
 	"ts-discord-shutup",
 	"ts-npm-validate-any",
 	"ts-npm-after-every",
@@ -127,16 +127,21 @@ export const TIER_3_IDS = [
 	"web-song-mago",
 ] as const
 
+/**
+ * Tier 4: Not even for display
+ * -
+ */
+
 // Homepage "Featured Projects" section — subset of TIER_1_IDS (order = display order)
 export const FEATURED_PROJECT_IDS: string[] = [
 	"finpoint",
 	"soundroid-v2",
-	"therook",
+	"ts-npm-ytmusic-api",
 ] satisfies (typeof TIER_1_IDS)[number][]
 
 // Homepage "Other Projects" grid — subset of TIER_1_IDS (order = display order)
 export const OTHER_PROJECT_IDS: string[] = [
-	"ts-npm-ytmusic-api",
+	"therook",
 	"nus-canvas-archive",
 	"ts-discord-soundroid",
 	"ts-discord-reminder",
