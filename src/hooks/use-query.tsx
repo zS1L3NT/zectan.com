@@ -10,7 +10,7 @@ export default (projectsTags: string[]) => {
 		const match = search.get("match")
 		return {
 			tags: (search.get("tags")?.split(",") ?? []).filter(t => projectsTags.includes(t)),
-			match: (match === "any" ? "any" : "all") as MatchMode,
+			match: (match === "all" ? "all" : "any") as MatchMode,
 		}
 	}, [search, projectsTags])
 }

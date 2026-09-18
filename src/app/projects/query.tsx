@@ -60,7 +60,7 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 		if (tags.length > 0) {
 			search.set("tags", tags.join(","))
 		}
-		if (match === "any") {
+		if (match === "all") {
 			search.set("match", match)
 		}
 
@@ -85,23 +85,6 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 
 				<div className="flex">
 					<Link
-						href={getLink({ tags, match: "all" })}
-						className={cn(
-							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200",
-							match === "all" ? "bg-primary-400" : "bg-slate-200",
-						)}
-					>
-						<p
-							className={cn(
-								"xs:text-sm sm:text-base lg:text-md font-montserrat-regular",
-								match === "all" ? "text-white" : "",
-							)}
-						>
-							Match all
-						</p>
-					</Link>
-
-					<Link
 						href={getLink({ tags, match: "any" })}
 						className={cn(
 							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200 bg-slate-200",
@@ -115,6 +98,23 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 							)}
 						>
 							Match any
+						</p>
+					</Link>
+
+					<Link
+						href={getLink({ tags, match: "all" })}
+						className={cn(
+							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200",
+							match === "all" ? "bg-primary-400" : "bg-slate-200",
+						)}
+					>
+						<p
+							className={cn(
+								"xs:text-sm sm:text-base lg:text-md font-montserrat-regular",
+								match === "all" ? "text-white" : "",
+							)}
+						>
+							Match all
 						</p>
 					</Link>
 				</div>
