@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 
 import TagImage from "@/components/tag-image"
 import { HIDDEN_TAGS, TAG_CATEGORIES, TAG_ICON_URL } from "@/constants"
-import useQuery from "@/hooks/use-query"
+import useQuery, { type MatchMode } from "@/hooks/use-query"
 import cn from "@/utils/cn"
 
 const Checkbox = ({
@@ -45,7 +45,7 @@ const Checkbox = ({
 }
 
 export default function Query({ projectsTags }: { projectsTags: string[] }) {
-	const { tags } = useQuery(projectsTags)
+	const { tags, match } = useQuery(projectsTags)
 
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedTags, setSelectedTags] = useState<string[]>(tags)
@@ -54,11 +54,14 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 		setSelectedTags(tags)
 	}, [tags])
 
-	const getLink = ({ tags }: { tags: string[] }) => {
+	const getLink = ({ tags, match }: { tags: string[]; match: MatchMode }) => {
 		const search = new URLSearchParams()
 
 		if (tags.length > 0) {
 			search.set("tags", tags.join(","))
+		}
+		if (match === "any") {
+			search.set("match", match)
 		}
 
 		const query = `${search}`.replaceAll("%2C", ",")
@@ -79,6 +82,42 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 				>
 					<Image src="/assets/images/filter.svg" alt="Filter" width={20} height={20} />
 				</button>
+
+				<div className="flex">
+					<Link
+						href={getLink({ tags, match: "all" })}
+						className={cn(
+							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200",
+							match === "all" ? "bg-primary-400" : "bg-slate-200",
+						)}
+					>
+						<p
+							className={cn(
+								"xs:text-sm sm:text-base lg:text-md font-montserrat-regular",
+								match === "all" ? "text-white" : "",
+							)}
+						>
+							Match all
+						</p>
+					</Link>
+
+					<Link
+						href={getLink({ tags, match: "any" })}
+						className={cn(
+							"shadow-md cursor-pointer hover:scale-105 xs:p-2 sm:p-3 hover:shadow-slate-300 shadow-slate-200 bg-slate-200",
+							match === "any" ? "bg-primary-400" : "bg-slate-200",
+						)}
+					>
+						<p
+							className={cn(
+								"xs:text-sm sm:text-base lg:text-md font-montserrat-regular",
+								match === "any" ? "text-white" : "",
+							)}
+						>
+							Match any
+						</p>
+					</Link>
+				</div>
 			</div>
 
 			<div className="flex flex-wrap xs:gap-2 sm:gap-3 lg:gap-4">
@@ -96,7 +135,7 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 							height={16}
 						/>
 						{t[0]?.toUpperCase() + t.slice(1)}
-						<Link href={getLink({ tags: tags.filter(t_ => t !== t_) })}>
+						<Link href={getLink({ tags: tags.filter(t_ => t !== t_), match })}>
 							<Image
 								className="ml-1 cursor-pointer hover:scale-105"
 								src="/assets/images/close.svg"
@@ -172,7 +211,7 @@ export default function Query({ projectsTags }: { projectsTags: string[] }) {
 										Cancel
 									</button>
 									<Link
-										href={getLink({ tags: selectedTags })}
+										href={getLink({ tags: selectedTags, match })}
 										onClick={() => setIsOpen(false)}
 										className="block px-3 py-2 text-white xs:text-sm sm:text-base lg:text-md font-montserrat-regular hover:scale-105 hover:shadow-primary-400 bg-primary-400"
 									>

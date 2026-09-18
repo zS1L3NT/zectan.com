@@ -73,10 +73,16 @@ export default function Projects({
 	projects: Project[]
 	projectsTags: string[]
 }) {
-	const { tags } = useQuery(projectsTags)
+	const { tags, match } = useQuery(projectsTags)
 
 	// `projects` arrives in constants.ts order (manual curation) — never re-sort.
-	const filtered = projects.filter(p => tags.every(t => p.tags.includes(t)))
+	const filtered = projects.filter(
+		p =>
+			tags.length === 0 ||
+			(match === "all"
+				? tags.every(t => p.tags.includes(t))
+				: tags.some(t => p.tags.includes(t))),
+	)
 	const sections = TIER_META.map(meta => ({
 		...meta,
 		items: filtered.filter(p => p.tier === meta.tier),
