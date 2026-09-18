@@ -27,7 +27,7 @@ const svgClassName =
 	"fill-white cursor-pointer hover:fill-primary-500 hover:scale-125 pointer-events-auto"
 
 export default async function Page() {
-	const projects = await getProjects()
+	const projects = await getProjects([...FEATURED_PROJECT_IDS, ...OTHER_PROJECT_IDS])
 	const updated = await fetch(
 		`https://api.github.com/repos/${GITHUB_USERNAME}/${LAST_UPDATED_REPO}/commits/${LAST_UPDATED_BRANCH}`,
 		{ cache: "no-store" },
