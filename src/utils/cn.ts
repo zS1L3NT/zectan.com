@@ -1,4 +1,4 @@
-import clsx from "clsx"
+import clsx, { type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-export default (...inputs: clsx.ClassValue[]) => twMerge(clsx(...inputs))
+export default (...inputs: ClassValue[]) => twMerge(clsx(...inputs))

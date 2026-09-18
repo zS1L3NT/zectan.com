@@ -4,7 +4,7 @@
 		"target": "esnext",
 		"lib": ["dom", "dom.iterable", "esnext"], // "esnext"
 		"module": "esnext",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 
