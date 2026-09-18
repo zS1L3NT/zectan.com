@@ -60,41 +60,32 @@ export const TIER_META: { tier: ProjectTier; heading: string; blurb: string }[] 
 	{
 		tier: 3,
 		heading: "Archive",
-		blurb: "Tiny, simple, or just for fun — completeness over quality. Expectations drop from here.",
+		blurb: "Tiny, simple, or just for fun — completeness over quality.",
 	},
 ]
 
-// Homepage "Featured Projects" section (order = display order)
-export const FEATURED_PROJECT_IDS = [
-	// Tier 1
+// ── Projects ──
+// Canonical tier lists. Order within each tier = display order on /projects,
+// so reorder these arrays for a full custom sort.
+export const TIER_1_IDS = [
 	"finpoint",
 	"soundroid-v2",
 	"therook",
-]
-
-// Homepage "Other Projects" grid (order = display order)
-export const OTHER_PROJECT_IDS = [
-	// Tier 1
 	"ts-npm-ytmusic-api",
 	"nus-canvas-archive",
 	"ts-discord-soundroid",
 	"ts-discord-reminder",
 	"web-monetary",
 	"web-next-markex",
-]
-
-// Extra repo IDs that appear ONLY on the /projects page
-// (order within each tier = display order)
-export const EXTRA_TIER_1_IDS: string[] = [
 	"deskpower",
 	"web-formby",
 	"thepawn",
 	"soundroid-v1",
 	"web-next-statify",
 	"mldp",
-]
+] as const
 
-export const EXTRA_TIER_2_IDS: string[] = [
+export const TIER_2_IDS = [
 	"zectan.com",
 	"ts-burp-accelerator",
 	"web-youtubedl",
@@ -115,9 +106,9 @@ export const EXTRA_TIER_2_IDS: string[] = [
 	"ts-bun-gitcache",
 	"web-chess",
 	"chess-online",
-]
+] as const
 
-export const EXTRA_TIER_3_IDS: string[] = [
+export const TIER_3_IDS = [
 	"ts-adventofcode-2023",
 	"web-react-rubikscube",
 	"ts-discord-shutup",
@@ -134,16 +125,37 @@ export const EXTRA_TIER_3_IDS: string[] = [
 	"py-text-cryptor",
 	"web-geekout-intro",
 	"web-song-mago",
-]
+] as const
 
+// Homepage "Featured Projects" section — subset of TIER_1_IDS (order = display order)
+export const FEATURED_PROJECT_IDS: string[] = [
+	"finpoint",
+	"soundroid-v2",
+	"therook",
+] satisfies (typeof TIER_1_IDS)[number][]
+
+// Homepage "Other Projects" grid — subset of TIER_1_IDS (order = display order)
+export const OTHER_PROJECT_IDS: string[] = [
+	"ts-npm-ytmusic-api",
+	"nus-canvas-archive",
+	"ts-discord-soundroid",
+	"ts-discord-reminder",
+	"web-monetary",
+	"web-next-markex",
+] satisfies (typeof TIER_1_IDS)[number][]
+
+// Extra repo IDs that appear ONLY on the /projects page
+// (Tier 1 minus homepage picks, then Tiers 2–3)
 export const EXTRA_PROJECT_IDS: string[] = [
-	...EXTRA_TIER_1_IDS,
-	...EXTRA_TIER_2_IDS,
-	...EXTRA_TIER_3_IDS,
+	...TIER_1_IDS.filter(
+		id => !FEATURED_PROJECT_IDS.includes(id) && !OTHER_PROJECT_IDS.includes(id),
+	),
+	...TIER_2_IDS,
+	...TIER_3_IDS,
 ]
 
-const TIER_1_SET = new Set([...FEATURED_PROJECT_IDS, ...OTHER_PROJECT_IDS, ...EXTRA_TIER_1_IDS])
-const TIER_2_SET = new Set([...EXTRA_TIER_2_IDS])
+const TIER_1_SET = new Set<string>(TIER_1_IDS)
+const TIER_2_SET = new Set<string>(TIER_2_IDS)
 
 export const getProjectTier = (id: string): ProjectTier => {
 	if (TIER_1_SET.has(id)) return 1
@@ -151,11 +163,17 @@ export const getProjectTier = (id: string): ProjectTier => {
 	return 3
 }
 
+if (process.env.NODE_ENV !== "production") {
+	for (const id of [...FEATURED_PROJECT_IDS, ...OTHER_PROJECT_IDS]) {
+		if (!TIER_1_SET.has(id)) {
+			console.warn(`"${id}" is on the homepage but missing from TIER_1_IDS`)
+		}
+	}
+}
+
 // Full list fetched from GitHub (live metadata) for the /projects page.
-// To add/remove a project site-wide, edit the arrays above.
-export const PROJECT_IDS = [
-	...new Set([...FEATURED_PROJECT_IDS, ...OTHER_PROJECT_IDS, ...EXTRA_PROJECT_IDS]),
-]
+// To add/remove a project site-wide, edit the TIER_*_IDS arrays above.
+export const PROJECT_IDS = [...new Set<string>([...TIER_1_IDS, ...TIER_2_IDS, ...TIER_3_IDS])]
 
 // ── Contact section ──
 export const CONTACT_TEXT =
