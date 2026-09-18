@@ -86,7 +86,7 @@ export const TIER_1_IDS = [
 	"thepawn",
 	"deskpower",
 	"soundroid-v1",
-	"web-next-statify",
+	"web-react-statify",
 	"mldp",
 ] as const
 
