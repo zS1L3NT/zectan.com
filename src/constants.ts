@@ -62,6 +62,11 @@ export const TIER_META: { tier: ProjectTier; heading: string; blurb: string }[] 
 		heading: "Archive",
 		blurb: "Tiny, simple, or just for fun — completeness over quality.",
 	},
+	// {
+	// 	tier: 4,
+	// 	heading: "Not Displayed",
+	// 	blurb: "Projects I don't even want shown"
+	// }
 ]
 
 // ── Projects ──
@@ -110,27 +115,39 @@ export const TIER_2_IDS = [
 ] as const
 
 export const TIER_3_IDS = [
-	"ts-adventofcode-2023",
 	"ts-discord-shutup",
 	"ts-npm-validate-any",
 	"ts-npm-after-every",
-	"chatic",
+	"rs-regex-engine",
 	"rs-bowling-score",
-	"ino-arduino-reactiontest",
-	"rs-impossible-tictactoe",
-	"js-node-mst",
+	"chatic",
+	"rs-kattis-solutions",
+	"rs-linkedin-practice",
+	"ts-adventofcode-2023",
 	"gitcat",
-	"web-vue-graphx",
+	"rs-impossible-tictactoe",
+	"ino-arduino-reactiontest",
+	"js-node-mst",
 	"py-folder-sizes",
 	"py-text-cryptor",
+	"web-vue-graphx",
 	"web-geekout-intro",
 	"web-song-mago",
 ] as const
 
-/**
- * Tier 4: Not even for display
- * -
- */
+// export const TIER_4_IDS = [
+// 	"zS1L3NT",
+// 	".github",
+// 	"resume",
+// 	"web-cannot",
+// 	"web-next-memorial",
+// 	"web-vue-country-search",
+// 	"cpp-interest-finder",
+// 	"tmux-config",
+// 	"neovim-config",
+// 	"DefinitelyTyped",
+// 	"tracer",
+// ] as const
 
 // Homepage "Featured Projects" section — subset of TIER_1_IDS (order = display order)
 export const FEATURED_PROJECT_IDS: string[] = [
