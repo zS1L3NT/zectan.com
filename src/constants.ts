@@ -77,7 +77,7 @@ export const TIER_1_IDS = [
 	"finpoint",
 	"therook",
 	"soundroid-v2",
-	"nus-canvas-archive",
+	"nus-canvas-sync",
 	"ts-discord-soundroid",
 	"ts-discord-reminder",
 	"web-monetary",
@@ -159,7 +159,7 @@ export const FEATURED_PROJECT_IDS: string[] = [
 // Homepage "Other Projects" grid — subset of TIER_1_IDS (order = display order)
 export const OTHER_PROJECT_IDS: string[] = [
 	"therook",
-	"nus-canvas-archive",
+	"nus-canvas-sync",
 	"ts-discord-soundroid",
 	"ts-discord-reminder",
 	"web-monetary",
