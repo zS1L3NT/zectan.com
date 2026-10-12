@@ -5,3 +5,5 @@
 **/*.test.ts
 **/.vscode
 **/.next
+/STYLE.md
+/COMMIT.md
